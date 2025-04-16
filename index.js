@@ -57,7 +57,7 @@ app.post("/user/add",async(req,resp)=>{
     }
 })
 //get user list
-app.get("/user/list",async(req,resp)=>{
+app.get("/user/list",verifyJWT,async(req,resp)=>{
     try{
         const users=await User.find();
         resp.json(users);
