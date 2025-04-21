@@ -95,6 +95,17 @@ app.post("/user/login",async(req,resp)=>{
     }
     
 })
+//get projects
+
+app.get("/project",async(req,resp)=>{
+    try{
+        const projects=await Project.find();
+        resp.status(200).json(projects)
+    }
+    catch(error){
+        throw Error(error);
+    }
+})
 
 //post project
 app.post("/project/add",async(req,resp)=>{
