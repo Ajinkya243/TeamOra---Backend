@@ -36,6 +36,12 @@ const verifyJWT=(req,resp,next)=>{
     }
 }
 
+//verify token api
+app.get("/token/verify",verifyJWT,async(req,resp)=>{
+    const user=req.user;
+    resp.status(200).json(user);
+})
+
 app.get("/",(req,resp)=>{
     resp.send("Welcome to TeamOra backend server")
 })
