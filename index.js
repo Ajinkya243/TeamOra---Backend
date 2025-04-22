@@ -107,6 +107,25 @@ app.get("/project",async(req,resp)=>{
     }
 })
 
+//get project by given input
+app.get("/project/:input",async(req,resp)=>{
+    try{
+        const input=req.params.input;
+        if(!input){
+            const projects=await Project.find();
+            resp.status(200).json(projects);
+        }
+        const projects= await Project.find({name:{$regex:input,$options:"i"}});
+        resp.status(200).json(projects);
+        
+    }
+    catch(error){
+        throw error(error);
+    }
+
+    
+})
+
 //post project
 app.post("/project/add",async(req,resp)=>{
     try{
