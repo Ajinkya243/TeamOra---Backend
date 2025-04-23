@@ -12,6 +12,7 @@ const { Project } = require("./models/Project.models");
 const jwt_key=process.env.Jwt_Key;
 const bcrypt=require('bcrypt');
 const { Team } = require("./models/Team.models");
+const { Task } = require("./models/Task.models");
 
 
 connectDB().then(resp=>console.log('Database connected')).then(()=>{
@@ -134,7 +135,7 @@ app.post("/project/add",async(req,resp)=>{
         resp.json(project);
     }
     catch(error){
-        resp.status(500).json({message:"Something went wrong"})
+        resp.status(500).json({message:"Something went wrong"});
     }
 })
 
@@ -162,5 +163,29 @@ app.post("/team/add/user",verifyJWT,async(req,resp)=>{
     }
     catch(error){
         resp.json({message:"Something went wrong."})
+    }
+})
+
+//add task
+app.post("/task/add",async(req,resp)=>{
+    try{
+        const task=new Task(req.body);
+        await task.save();
+        resp.json(task);
+    }
+    catch(error){
+        throw Error(error);
+    }
+})
+
+//get user task
+app.get("/task/user/:id",async(req,resp)=>{
+    try{
+        const id=req.params.id;
+        const tasks=await Task.find({owners:{$in:[id]}})
+        resp.json(tasks);
+    }
+    catch(error){
+        throw Error(error);
     }
 })
