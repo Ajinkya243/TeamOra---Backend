@@ -182,7 +182,7 @@ app.post("/task/add",async(req,resp)=>{
 app.get("/task/user/:id",async(req,resp)=>{
     try{
         const id=req.params.id;
-        const tasks=await Task.find({owners:{$in:[id]}})
+        const tasks=await Task.find({owners:{$in:[id]}}).populate('owners','name email');
         resp.json(tasks);
     }
     catch(error){
