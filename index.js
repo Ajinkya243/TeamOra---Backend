@@ -179,11 +179,29 @@ app.post("/task/add",async(req,resp)=>{
 })
 
 //get user task
-app.get("/task/user/:id",async(req,resp)=>{
+// app.get("/task/user/:id",async(req,resp)=>{
+//     try{
+//         const id=req.params.id;
+//         const tasks=await Task.find({owners:{$in:[id]}}).populate('owners','name email');
+//         resp.json(tasks);
+//     }
+//     catch(error){
+//         throw Error(error);
+//     }
+// })
+
+app.get("/task/user",async(req,resp)=>{
+    const {id,status}=req.query;
     try{
-        const id=req.params.id;
-        const tasks=await Task.find({owners:{$in:[id]}}).populate('owners','name email');
-        resp.json(tasks);
+        const tasks=await Task.find({owners:{$in:[id]}});
+        if(!status){
+            resp.json(tasks);
+        }
+        else{
+            const filteredTasks = tasks.filter(task => task.status === status);
+            resp.json(filterStatus);
+        }
+        
     }
     catch(error){
         throw Error(error);
