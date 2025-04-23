@@ -199,7 +199,7 @@ app.get("/task/user",async(req,resp)=>{
         }
         else{
             const filteredTasks = tasks.filter(task => task.status === status);
-            resp.json(filterStatus);
+            resp.json(filteredTasks);
         }
         
     }
