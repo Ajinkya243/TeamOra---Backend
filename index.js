@@ -207,3 +207,13 @@ app.get("/task/user",async(req,resp)=>{
         throw Error(error);
     }
 })
+
+app.get("/teams",async(req,resp)=>{
+    try{
+        const teams=await Team.find();
+        resp.status(200).json(teams);
+    }
+    catch(error){
+        throw Error(error.message);
+    }
+})
