@@ -228,7 +228,7 @@ app.get("/task/user",async(req,resp)=>{
 app.get("/task/project",async(req,resp)=>{
     try{
         const {id}=req.query;
-        const tasks=await Task.find({project:id});
+        const tasks=await Task.find({project:id}).populate('owners','name email');
         resp.json(tasks);
     }
     catch(error){
