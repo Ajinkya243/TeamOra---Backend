@@ -224,6 +224,18 @@ app.get("/task/user",async(req,resp)=>{
     }
 })
 
+//get task by project id
+app.get("/task/project",async(req,resp)=>{
+    try{
+        const {id}=req.query;
+        const tasks=await Task.find({project:id});
+        resp.json(tasks);
+    }
+    catch(error){
+        throw Error(error);
+    }
+})
+
 app.get("/teams",async(req,resp)=>{
     try{
         const teams=await Team.find();
