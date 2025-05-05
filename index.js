@@ -108,6 +108,20 @@ app.get("/project",async(req,resp)=>{
     }
 })
 
+//get project by id
+app.get("/projectId/:id",async(req,resp)=>{
+    try{
+        const id=req.params.id;
+        console.log(id);
+        const project=await Project.findById(id);
+        console.log(project);
+        resp.json(project);
+    }
+    catch(error){
+        throw Error(error);
+    }
+})
+
 //get project by given input
 app.get("/project/:input",async(req,resp)=>{
     try{
@@ -127,17 +141,7 @@ app.get("/project/:input",async(req,resp)=>{
     
 })
 
-//get project by id
-app.get("/project/:id",async(req,resp)=>{
-    try{
-        const id=req.params.id;
-        const project=await Project.findById(id);
-        resp.json(project);
-    }
-    catch(error){
-        throw Error(error);
-    }
-})
+
 
 //post project
 app.post("/project/add",async(req,resp)=>{
