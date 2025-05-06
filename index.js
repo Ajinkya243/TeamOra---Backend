@@ -159,8 +159,9 @@ app.post("/project/add",async(req,resp)=>{
 app.post("/team",async(req,resp)=>{
     try{
         const team=new Team(req.body);
-        await team.save();
-        resp.json(team);
+        const saveTeam=await team.save();
+        const populateTeam=await saveTeam.populate('owners')
+        resp.json(populateTeam);
     }
     catch(error){
         resp.status(500).json({message:"Error occur"})
