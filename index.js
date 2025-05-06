@@ -245,3 +245,14 @@ app.get("/teams",async(req,resp)=>{
         throw Error(error.message);
     }
 })
+
+app.get("/team/:id",async(req,resp)=>{
+    try{
+        const{id}=req.params.id;
+        const team=await Team.findById(id);
+        resp.status(200).json(team);
+    }
+    catch(error){
+        throw Error(error);
+    }
+})
