@@ -248,7 +248,8 @@ app.get("/teams",async(req,resp)=>{
 
 app.get("/team/:id",async(req,resp)=>{
     try{
-        const{id}=req.params.id;
+        const id=req.params.id;
+        console.log(id);
         const team=await Team.findById(id);
         resp.status(200).json(team);
     }
