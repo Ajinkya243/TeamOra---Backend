@@ -156,7 +156,7 @@ app.post("/project/add",async(req,resp)=>{
 })
 
 //post team
-app.post("/team/add",async(req,resp)=>{
+app.post("/team",async(req,resp)=>{
     try{
         const team=new Team(req.body);
         await team.save();
@@ -168,7 +168,7 @@ app.post("/team/add",async(req,resp)=>{
 })
 
 //add team member
-app.post("/team/add/user",verifyJWT,async(req,resp)=>{
+app.post("/team/user",verifyJWT,async(req,resp)=>{
     const{_id,user}=req.body;
     try{
         const team=await Team.findById(_id);
@@ -238,7 +238,7 @@ app.get("/task/project",async(req,resp)=>{
 
 app.get("/teams",async(req,resp)=>{
     try{
-        const teams=await Team.find();
+        const teams=await Team.find().populate('members');
         resp.status(200).json(teams);
     }
     catch(error){
