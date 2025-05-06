@@ -167,20 +167,34 @@ app.post("/team",async(req,resp)=>{
     }
 })
 
-//add team member
-app.post("/team/user",verifyJWT,async(req,resp)=>{
-    const{_id,user}=req.body;
+// //add team member
+// app.post("/team/user",verifyJWT,async(req,resp)=>{
+//     const{_id,user}=req.body;
+//     try{
+//         const team=await Team.findById(_id);
+//         if (team.members.includes(user._id)) {
+//             return resp.status(409).json({ message: "User already in team." });
+//         }
+//         team.members.push(user._id);
+//     }
+//     catch(error){
+//         resp.json({message:"Something went wrong."})
+//     }
+// })
+
+//add member to team
+app.post("/team/member",async(req,resp)=>{
     try{
-        const team=await Team.findById(_id);
-        if (team.members.includes(user._id)) {
-            return resp.status(409).json({ message: "User already in team." });
-        }
-        team.members.push(user._id);
+        const{id,member}=req.body;
+        const team=await Team.findByIdAndUpdate(id,{$push:{members:member}},{new:true});
+        resp.status(200).json(team);
     }
     catch(error){
-        resp.json({message:"Something went wrong."})
+        throw Error(error);
     }
 })
+
+
 
 //add task
 app.post("/task/add",async(req,resp)=>{
