@@ -186,7 +186,7 @@ app.post("/team",async(req,resp)=>{
 app.post("/team/member",async(req,resp)=>{
     try{
         const{id,member}=req.body;
-        const team=await Team.findByIdAndUpdate(id,{$push:{members:member}},{new:true});
+        const team=await Team.findByIdAndUpdate(id,{$push:{members:member}},{new:true}).populate('members');
         resp.status(200).json(team);
     }
     catch(error){
