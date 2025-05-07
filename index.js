@@ -242,9 +242,16 @@ app.get("/task/user",async(req,resp)=>{
 //get task by project id
 app.get("/task/project",async(req,resp)=>{
     try{
-        const {id}=req.query;
-        const tasks=await Task.find({project:id}).populate('owners','name email');
-        resp.json(tasks);
+        const {id,debounceInput}=req.query;
+        if(!debounceInput){
+            const tasks=await Task.find({project:id}).populate('owners','name email');
+            resp.json(tasks);
+        }
+        else{
+            const tasks=await Task.find({project:id,name:{$regex:debounceInput,$options:'i'}}).populate('owners','name email');
+            resp.json(tasks);
+        }
+        
     }
     catch(error){
         throw Error(error);
