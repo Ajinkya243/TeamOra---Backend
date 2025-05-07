@@ -291,3 +291,15 @@ app.get("/task/:id",async(req,resp)=>{
         throw Error(error);
     }
 })
+
+//mark task as completed
+app.post("/task/:id",async(req,resp)=>{
+    try{
+        const id=req.params.id;
+        const task=await Task.findByIdAndUpdate(id,{status:'Completed'},{new:true}).populate('project').populate('owners');
+        resp.status(200).json(task);
+    }
+    catch(error){
+        throw Error(error);
+    }
+})
