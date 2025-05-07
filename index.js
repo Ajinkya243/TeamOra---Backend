@@ -279,3 +279,15 @@ app.get("/team/:id",async(req,resp)=>{
         throw Error(error);
     }
 })
+
+//get project task by id
+app.get("/task/:id",async(req,resp)=>{
+    try{
+        const id=req.params.id;
+        const task=await Task.findById(id);
+        resp.status(200).json(task);
+    }
+    catch(error){
+        throw Error(error);
+    }
+})
