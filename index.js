@@ -303,3 +303,13 @@ app.post("/task/:id",async(req,resp)=>{
         throw Error(error);
     }
 })
+//get all tasks
+app.get("/tasks",async(req,resp)=>{
+    try{
+        const tasks=await Task.find().populate('project').populate('team').populate('owners');
+        resp.status(200).json(tasks);
+    }
+    catch(error){
+        throw Error(error);
+    }
+})
